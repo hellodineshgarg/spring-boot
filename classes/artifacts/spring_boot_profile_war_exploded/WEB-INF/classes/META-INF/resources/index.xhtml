@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+
+    <div class="ui-g">
+
+        <div class="ui-g-12" align="center">
+            <h3>Users Managment #{msg.user}</h3>
+        </div>
+        <div class="ui-g-12 ui-g-nopad">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12">
+
+                    <h:form id="formnewuser">
+                        <p:growl id="growl"  autoUpdate="true"/>
+                        <p:panel id="panel" header="Add New User">
+                            <h:panelGrid columns="2" cellpadding="14">
+                                <p:outputLabel for="firstname" value="Firstname:"/>
+                                <p:inputText id="firstname"  label="Firstname" value="#{userBean.firstname}"/>
+
+                                <p:outputLabel for="lastname" value="Lastname:"/>
+                                <p:inputText id="lastname" label="Lastname"  value="#{userBean.lastname}"/>
+
+                                <p:outputLabel for="username" value="Username:"/>
+                                <p:inputText id="username" label="Username" value="#{userBean.username}"/>
+
+
+                                <p:outputLabel for="password" value="Password:"/>
+                                <p:inputText id="password" label="Password"  value="#{userBean.password}"/>
+
+                            </h:panelGrid>
+                            <p:commandButton value="Save" update="userform formnewuser" actionListener="#{userBean.addUser()}" icon="ui-icon-check"/>
+                        </p:panel>
+                    </h:form>
+
+                </div>
+            </div>
+
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12">
+
+                    <h:form id="userform">
+                            <p:dataTable id="userdatatable" var="user" value="#{userBean.userList}" editable="true" editMode="cell" widgetVar="cellUsers" rows="10">
+
+                                <p:ajax event="cellEdit" listener="#{userBean.onCellEdit}" update="userdatatable" />
+
+                                <p:column headerText="Id">
+                                    <h:outputText value="#{user.userId}"  />
+                                </p:column>
+
+                                <p:column headerText="Firstname">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{user.firstname}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{user.firstname}"  label="Firstname"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Lastname">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{user.lastname}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{user.lastname}"  label="Lastname"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Username">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{user.username}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{user.username}"  label="Username"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="">
+                                    <p:commandButton value="remove" update="userdatatable" actionListener="#{userBean.remove(user.userId)}" icon="ui-icon-trash"/>
+                                </p:column>
+
+                            </p:dataTable>
+                    </h:form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</h:body>
+</html>
