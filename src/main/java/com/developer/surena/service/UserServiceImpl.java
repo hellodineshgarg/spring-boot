@@ -176,7 +176,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsersStartEnd(int page, int size) {
-       return userRepository.getUsersLimit(new PageRequest(page , size));
+      // return userRepository.getUsersLimit(new PageRequest(page , size, null));
+    return null;
     }
 
 
